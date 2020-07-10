@@ -43,9 +43,8 @@ public class Game
                     else
                         grid = NewGame();
                 }
-                else{
-                    grid = TakeTurn(player, grid);
-                }
+                
+                grid = TakeTurn(player, grid);
             }   
         }
     }
