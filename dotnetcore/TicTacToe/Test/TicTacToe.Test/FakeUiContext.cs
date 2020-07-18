@@ -1,7 +1,7 @@
 using System;
 using Hollyathome.Games.TicTacToe.Lib;
 
-namespace Hollyathome.Games.TicTacToe.Test
+namespace TicTacToe.Test
 {
     internal class FakeUiContext : UiContext
     {
@@ -69,7 +69,11 @@ namespace Hollyathome.Games.TicTacToe.Test
 
         public override bool StartNewGame()
         {
-            return false;
+            _nextMove++;
+
+            return 
+                _moves.Length > _nextMove 
+                && _moves[_nextMove] == TicTacToeTests.NEW_GAME;
         }
     }
 }
