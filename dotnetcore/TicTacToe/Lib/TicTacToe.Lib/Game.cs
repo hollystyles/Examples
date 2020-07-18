@@ -110,7 +110,7 @@ namespace Hollyathome.Games.TicTacToe.Lib
 
             if(_winLines.Count() == 0)
             {
-                Console.WriteLine("The game is a draw.");
+                _ui.DeclareDrawnGame();
                 return true;
             }
 
