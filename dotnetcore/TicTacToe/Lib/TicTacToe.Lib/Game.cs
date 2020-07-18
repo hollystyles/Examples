@@ -18,19 +18,6 @@ namespace Hollyathome.Games.TicTacToe.Lib
             _ui = ui;
 
             _gridStack = new Stack<Grid>();
-
-            _winLines = new List<int[]>(8);
-
-            _winLines.Add(new int[]{1,2,3});
-            _winLines.Add(new int[]{4,5,6});
-            _winLines.Add(new int[]{7,8,9});
-
-            _winLines.Add(new int[]{1,5,9});
-            _winLines.Add(new int[]{3,5,7});
-
-            _winLines.Add(new int[]{1,4,7});
-            _winLines.Add(new int[]{2,5,8});
-            _winLines.Add(new int[]{3,6,9});
         }
 
         public void Run()
@@ -70,6 +57,18 @@ namespace Hollyathome.Games.TicTacToe.Lib
 
         private Grid NewGame()
         {
+            _winLines = new List<int[]>(8);
+
+            _winLines.Add(new int[]{1,2,3});
+            _winLines.Add(new int[]{4,5,6});
+            _winLines.Add(new int[]{7,8,9});
+
+            _winLines.Add(new int[]{1,5,9});
+            _winLines.Add(new int[]{3,5,7});
+
+            _winLines.Add(new int[]{1,4,7});
+            _winLines.Add(new int[]{2,5,8});
+            _winLines.Add(new int[]{3,6,9});
             _gridStack.Clear();
             var grid = NewGrid();
             _gridStack.Push(grid);
