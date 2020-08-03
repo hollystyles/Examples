@@ -32,7 +32,7 @@ namespace Hollyathome.Games.TicTacToe.Console
             System.Console.WriteLine();
         }
 
-        public override int GetPlayerMove(Player player)
+        public override void TakeTurn(Grid grid, Player player)
         {
             var move = 0;
             
@@ -41,7 +41,7 @@ namespace Hollyathome.Games.TicTacToe.Console
             
             int.TryParse(input, out move);
             
-            return move;
+            player.AttemptMove(grid, move);
         }
 
         public override void Error(string message)
@@ -59,20 +59,23 @@ namespace Hollyathome.Games.TicTacToe.Console
             System.Console.WriteLine("The game is a draw.");
         }
 
-        public override bool StartNewGame()
+        public static void Play(Game game)
         {
+            game.Start();
+            
             while(true)
             {
+
                 System.Console.Write("New game (y/n): ");
                 var input = System.Console.ReadLine();
 
                 if(input.ToLower() == "y")
                 {
-                    return true;
+                    game.Start();
                 }
                 else if(input.ToLower() == "n")
                 {
-                    return false; 
+                    return; 
                 }
                 else
                 {

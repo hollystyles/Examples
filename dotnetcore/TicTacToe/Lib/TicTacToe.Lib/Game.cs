@@ -8,51 +8,38 @@ namespace Hollyathome.Games.TicTacToe.Lib
     {
         private readonly Player[] _players;
         private readonly UiContext _ui;
-        private readonly Stack<Grid> _gridStack;
         private List<int[]> _winLines;
+
+        private int _playerIndex;
 
         public Game(Player[] players, UiContext ui)
         {
             _players = players;
 
-            _ui = ui;
+            _playerIndex = 0;
 
-            _gridStack = new Stack<Grid>();
+            _ui = ui;
         }
 
-        public void Run()
+        public virtual void Start()
         {
             var grid = NewGame();
 
-            while(true)
-            {
-                foreach(var player in _players)
-                {
-                    if(GameOver(grid))
-                    {
-                        if(!PlayAgain())
-                            return;
-                        else
-                            grid = NewGame();
-                    }
-                    
-                    grid = TakeTurn(player, grid);
-                }   
-            }
+            _ui.Start(this);
+
+            _players[_playerIndex].Play(grid);
         }
 
-        private Grid TakeTurn(Player player, Grid grid)
+        public virtual void NextTurn(Grid grid)
         {
-            grid = player.Play(grid);
-            _gridStack.Push(grid);
+            _playerIndex = (_playerIndex == 0 ) ? 1 : 0;
+            
             _ui.Draw(grid);
 
-            return grid;
-        }
-
-        private bool PlayAgain()
-        {
-            return _ui.StartNewGame();
+            if(!GameOver(grid))
+            {
+                _players[_playerIndex].Play(grid);
+            }
         }
 
         private Grid NewGame()
@@ -69,9 +56,9 @@ namespace Hollyathome.Games.TicTacToe.Lib
             _winLines.Add(new int[]{1,4,7});
             _winLines.Add(new int[]{2,5,8});
             _winLines.Add(new int[]{3,6,9});
-            _gridStack.Clear();
+
             var grid = NewGrid();
-            _gridStack.Push(grid);
+
             _ui.Draw(grid);
 
             return grid;

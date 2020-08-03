@@ -9,15 +9,16 @@ namespace Hollyathome.Games.TicTacToe.Console
         {
             var console = new ConsoleUiContext();
 
-            var g = new Game(
-                new Player[]{
-                    new Player("O", console),
-                    new Player("X", console)
-                },
-                console
+            ConsoleUiContext.Play(
+                new Game(
+                    new Player[]{
+                        new Player("O", console),
+                        new Player("X", console)
+                    },
+                    console
+                )
             );
-
-            g.Run();
+            
         }
     }
 }

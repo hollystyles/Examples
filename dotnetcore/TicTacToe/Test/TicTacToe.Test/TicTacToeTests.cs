@@ -6,8 +6,6 @@ namespace TicTacToe.Test
 {
     public class TicTacToeTests
     {
-        public const int NEW_GAME = 99;
-
         [Fact]
         public void TestNoughtsWins()
         {
@@ -23,7 +21,10 @@ namespace TicTacToe.Test
                 fakeUi
             );
 
-            g.Run();
+            while(fakeUi.HasMoreMoves())
+            {
+                g.Start();
+            }
 
             Assert.False(fakeUi.IsDrawnGame);
             Assert.True(fakeUi.Winner.Symbol() == "O");
@@ -33,7 +34,7 @@ namespace TicTacToe.Test
         public void TestCrossesWinsAfterNoughtsWins()
         {
             var fakeUi = new FakeUiContext(new int[]{
-                    1, 2, 3, 4, 5 ,6, 7, NEW_GAME, 1, 2, 3, 4, 5 ,6, 7
+                    1, 2, 3, 4, 5 ,6, 7, 1, 2, 3, 4, 5 ,6, 7
                 });
             
             var g = new Game(
@@ -44,15 +45,20 @@ namespace TicTacToe.Test
                 fakeUi
             );
 
-            g.Run();
+            g.Start();
+
+            Assert.False(fakeUi.IsDrawnGame);
+            Assert.True(fakeUi.Winner.Symbol() == "O");
+
+            g.Start();
 
             Assert.False(fakeUi.IsDrawnGame);
             Assert.True(fakeUi.Winner.Symbol() == "X");
         }
 
         [Theory]
-        [InlineData(new int[]{1, 2, 3, 5, 4, 7, 6, 9, 8, NEW_GAME, 8, 6, 7, 4, 5, 3, 2, 1})]
-        [InlineData(new int[]{8, 9, 6, 7, 4, 5, 3, 2, 1, NEW_GAME, 1, 3, 5, 4, 7, 6, 9, 8})]
+        [InlineData(new int[]{1, 2, 3, 5, 4, 7, 6, 9, 8, 8, 9, 6, 7, 4, 5, 3, 2, 1})]
+        [InlineData(new int[]{8, 9, 6, 7, 4, 5, 3, 2, 1, 1, 2, 3, 5, 4, 7, 6, 9, 8})]
         public void TestDrawnGame(int[] moves)
         {
             var fakeUi = new FakeUiContext(moves);
@@ -65,7 +71,12 @@ namespace TicTacToe.Test
                 fakeUi
             );
 
-            g.Run();
+            //Play two drawn games back to back
+            g.Start();
+
+            Assert.True(fakeUi.IsDrawnGame);
+
+            g.Start();
 
             Assert.True(fakeUi.IsDrawnGame);
         }
@@ -74,7 +85,7 @@ namespace TicTacToe.Test
         public void TestAlternateStartingPlayer()
         {
             var fakeUi = new FakeUiContext(new int[]{
-                    1, 2, 3, 4, 5 ,6, 7, NEW_GAME, 1, 2, 3, 4, 5 ,6, 7
+                    1, 2, 3, 4, 5 ,6, 7, 1, 2, 3, 4, 5 ,6, 7
                 });
             
             var g = new Game(
@@ -85,7 +96,10 @@ namespace TicTacToe.Test
                 fakeUi
             );
 
-            g.Run();
+            while(fakeUi.HasMoreMoves())
+            {
+                g.Start();
+            }
 
             Assert.True(fakeUi.Winner.Symbol() == "X");
         }
@@ -93,7 +107,7 @@ namespace TicTacToe.Test
         [Theory]
         [InlineData(new int[]{1, 1, 2, 3, 4, 5 ,6, 7})]
         [InlineData(new int[]{1, 10, 20, 2, 3, 4, 5 ,6, 7})]
-        [InlineData(new int[]{8, 9, 6, 7, 4, 5, 3, 2, 1, NEW_GAME, 1, 1, 3, 5, 4, 7, 6, 9, 8})]
+        [InlineData(new int[]{8, 9, 6, 7, 4, 5, 3, 2, 1, 1, 1, 3, 5, 4, 7, 6, 9, 8})]
         public void TestInvalidMove(int[] moves)
         {
             var fakeUi = new FakeUiContext(moves);
@@ -106,7 +120,10 @@ namespace TicTacToe.Test
                 fakeUi
             );
 
-            g.Run();
+            while(fakeUi.HasMoreMoves())
+            {
+                g.Start();
+            }
 
             Assert.EndsWith("Please try again.", fakeUi.LastError);
         }

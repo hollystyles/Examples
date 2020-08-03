@@ -45,11 +45,12 @@ namespace TicTacToe.Test
         public override void Draw(Grid grid)
         {}
 
-        public override int GetPlayerMove(Player player)
+        public override void TakeTurn(Grid grid, Player player)
         {
             _nextMove++;
 
-            return _moves[_nextMove];
+            if(_nextMove < _moves.Length )
+                player.AttemptMove(grid, _moves[_nextMove]);
         }
 
         public override void Error(string message)
@@ -67,13 +68,9 @@ namespace TicTacToe.Test
             _isDrawnGame = true;
         }
 
-        public override bool StartNewGame()
+        public bool HasMoreMoves()
         {
-            _nextMove++;
-
-            return 
-                _moves.Length > _nextMove 
-                && _moves[_nextMove] == TicTacToeTests.NEW_GAME;
+            return _nextMove + 1 < _moves.Length;
         }
     }
 }

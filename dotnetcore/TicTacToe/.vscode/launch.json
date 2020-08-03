@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Console/TicTacToe.Console/bin/Debug/netcoreapp3.1/TicTacToe.Console.dll",
+            "program": "${workspaceFolder}/Console/TicTacToe.Console/bin/Debug/netcoreapp3.1/TicTacToe.Console.exe",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "externalTerminal",

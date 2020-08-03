@@ -21,20 +21,22 @@ namespace Hollyathome.Games.TicTacToe.Lib
             return _symbol;
         }
 
-        public Grid Play(Grid grid)
+        internal void Play(Grid grid)
         {
-            while(true)
-            {
-                var move = _ui.GetPlayerMove(this);
+            _ui.TakeTurn(grid, this);                
+        }
 
-                if(IsValidMove(grid, move))
-                {
-                    return ApplyMove(grid, move);
-                }
-                else
-                {
-                    _ui.Error($"Your choice was not a valid cell or the cell is already taken. Please try again.");
-                }
+        public virtual void AttemptMove(Grid grid, int move)
+        {
+            if(IsValidMove(grid, move))
+            {
+                grid = ApplyMove(grid, move);
+                _ui.TurnOver(grid);             
+            }
+            else
+            {
+                _ui.Error($"Your choice was not a valid cell or the cell is already taken. Please try again.");
+                _ui.TakeTurn(grid, this);
             }
         }
 
