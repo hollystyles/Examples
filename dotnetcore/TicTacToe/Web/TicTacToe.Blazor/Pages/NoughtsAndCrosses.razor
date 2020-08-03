@@ -1,0 +1,143 @@
+@using Hollyathome.Games.TicTacToe.Lib
+@using System.Threading
+
+@page "/noughtsandcrosses"
+
+<h1>Noughts &amp; Crosses</h1>
+
+@if (initialized)
+{
+    <table class="table w-auto"> 
+        <tbody>
+            <tr>
+                <td @onclick="Cell1Click">@uiContext.currentGrid.CellAt(1).Content()</td>
+                <td @onclick="Cell2Click">@uiContext.currentGrid.CellAt(2).Content()</td>
+                <td @onclick="Cell3Click">@uiContext.currentGrid.CellAt(3).Content()</td>
+            </tr>
+            <tr>
+                <td @onclick="Cell4Click">@uiContext.currentGrid.CellAt(4).Content()</td>
+                <td @onclick="Cell5Click">@uiContext.currentGrid.CellAt(5).Content()</td>
+                <td @onclick="Cell6Click">@uiContext.currentGrid.CellAt(6).Content()</td>
+            </tr>
+            <tr>
+                <td @onclick="Cell7Click">@uiContext.currentGrid.CellAt(7).Content()</td>
+                <td @onclick="Cell8Click">@uiContext.currentGrid.CellAt(8).Content()</td>
+                <td @onclick="Cell9Click">@uiContext.currentGrid.CellAt(9).Content()</td>
+            </tr>
+        </tbody>
+    </table>
+}
+    <div>
+        <p>@uiContext.prompt</p>
+    </div>
+@if (!started)
+{
+    <div>
+        <button class="btn btn-primary" @onclick="Start">Start</button>
+    </div>
+}
+    <div>
+        <p>@uiContext.error</p>
+    </div>
+
+@code{
+
+    private BlazorUiContext uiContext;
+
+    private Game game;
+
+    private bool initialized;
+
+    private bool started;
+
+    private int nextMove;
+
+    protected override void OnInitialized()
+    {
+        uiContext = new BlazorUiContext();
+
+        game = new Game(
+                new Player[]{
+                    new Player("O", uiContext),
+                    new Player("X", uiContext)
+                },
+                uiContext
+            );
+    }
+
+    private void Start()
+    {
+        if(!initialized)
+        {
+            initialized =  true;
+        }
+        
+        started = true;
+        uiContext.gameOver = false;
+        game.Start();
+    }
+
+    private void Go()
+    {
+        if(!uiContext.gameOver)
+        {
+            uiContext.error = string.Empty;
+            uiContext.AcceptMove(nextMove);
+            started = !uiContext.gameOver;
+        }
+    }    
+
+    private void Cell1Click()
+    {   
+        nextMove = 1;
+        Go();
+    }     
+
+    private void Cell2Click()
+    {   
+        nextMove = 2;
+        Go();
+    }    
+
+    private void Cell3Click()
+    {   
+        nextMove = 3;
+        Go();
+    }    
+
+    private void Cell4Click()
+    {   
+        nextMove = 4;
+        Go();
+    }    
+
+    private void Cell5Click()
+    {   
+        nextMove = 5;
+        Go();
+    }    
+
+    private void Cell6Click()
+    {   
+        nextMove = 6;
+        Go();
+    }    
+
+    private void Cell7Click()
+    {   
+        nextMove = 7;
+        Go();
+    }    
+
+    private void Cell8Click()
+    {   
+        nextMove = 8;
+        Go();
+    }    
+
+    private void Cell9Click()
+    {   
+        nextMove = 9;
+        Go();
+    }
+}
