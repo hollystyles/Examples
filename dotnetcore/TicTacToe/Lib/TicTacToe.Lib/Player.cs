@@ -10,6 +10,10 @@ namespace Hollyathome.Games.TicTacToe.Lib
         private readonly string _symbol;
         private readonly UiContext _ui;
 
+        public event EventHandler<TakeTurnEventArgs> TakeTurnHandler;        
+
+        public event EventHandler<EndTurnEventArgs> EndTurnHandler;
+
         public Player(string symbol, UiContext ui)
         {
             _symbol = symbol;
@@ -23,7 +27,7 @@ namespace Hollyathome.Games.TicTacToe.Lib
 
         internal void Play(Grid grid)
         {
-            _ui.TakeTurn(grid, this);                
+            OnTakeTurn(grid);                
         }
 
         public virtual void AttemptMove(Grid grid, int move)
@@ -31,13 +35,29 @@ namespace Hollyathome.Games.TicTacToe.Lib
             if(IsValidMove(grid, move))
             {
                 grid = ApplyMove(grid, move);
-                _ui.TurnOver(grid);             
+                OnEndTurn(grid);             
             }
             else
             {
                 _ui.Error($"Your choice was not a valid cell or the cell is already taken. Please try again.");
-                _ui.TakeTurn(grid, this);
+                OnTakeTurn(grid);
             }
+        }
+
+        private void OnTakeTurn(Grid grid)
+        {
+            TakeTurnHandler?.Invoke(
+                this,
+                new TakeTurnEventArgs(grid, this)
+            );
+        }
+
+        private void OnEndTurn(Grid grid)
+        {
+            EndTurnHandler?.Invoke(
+                this,
+                new EndTurnEventArgs(grid)
+            );
         }
 
         private bool IsValidMove(Grid grid, int move)

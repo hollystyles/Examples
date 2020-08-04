@@ -21,12 +21,12 @@ namespace TicTacToe.Blazor
             currentGrid = grid;
         }
 
-        public override void TakeTurn(Grid grid, Player player)
+        public override void OnPlayerTakeTurn(object sender, TakeTurnEventArgs args)
         { 
-            currentPlayer = player;
-            currentGrid = grid;
+            currentPlayer = args.Player;
+            currentGrid = args.Grid;
 
-            prompt = $"Player '{player.Symbol()}' choose a free cell (1-9): ";
+            prompt = $"Player '{args.Player.Symbol()}' choose a free cell (1-9): ";
         }
 
         public void AcceptMove(int move)

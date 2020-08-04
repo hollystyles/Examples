@@ -7,7 +7,9 @@ namespace Hollyathome.Games.TicTacToe.Lib
     public class Game
     {
         private readonly Player[] _players;
+
         private readonly UiContext _ui;
+
         private List<int[]> _winLines;
 
         private int _playerIndex;
@@ -19,13 +21,24 @@ namespace Hollyathome.Games.TicTacToe.Lib
             _playerIndex = 0;
 
             _ui = ui;
+
+            foreach(var player in players)
+            {
+                player.TakeTurnHandler += _ui.OnPlayerTakeTurn;
+                player.EndTurnHandler += OnPlayerEndTurn;
+            }
+        }
+
+        public virtual void OnPlayerEndTurn(object sender, EndTurnEventArgs args)
+        {
+            NextTurn(args.Grid);
         }
 
         public virtual void Start()
         {
             var grid = NewGame();
 
-            _ui.Start(this);
+            _ui.Draw(grid);
 
             _players[_playerIndex].Play(grid);
         }
@@ -58,8 +71,6 @@ namespace Hollyathome.Games.TicTacToe.Lib
             _winLines.Add(new int[]{3,6,9});
 
             var grid = NewGrid();
-
-            _ui.Draw(grid);
 
             return grid;
         }

@@ -32,16 +32,16 @@ namespace Hollyathome.Games.TicTacToe.Console
             System.Console.WriteLine();
         }
 
-        public override void TakeTurn(Grid grid, Player player)
+        public override void OnPlayerTakeTurn(object sender, TakeTurnEventArgs args)
         {
             var move = 0;
             
-            System.Console.Write($"Player '{player.Symbol()}' choose a free cell (1-9): ");
+            System.Console.Write($"Player '{args.Player.Symbol()}' choose a free cell (1-9): ");
             var input =  System.Console.ReadLine();
             
             int.TryParse(input, out move);
             
-            player.AttemptMove(grid, move);
+            args.Player.AttemptMove(args.Grid, move);
         }
 
         public override void Error(string message)

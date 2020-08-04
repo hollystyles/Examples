@@ -45,12 +45,12 @@ namespace TicTacToe.Test
         public override void Draw(Grid grid)
         {}
 
-        public override void TakeTurn(Grid grid, Player player)
+        public override void OnPlayerTakeTurn(object sender, TakeTurnEventArgs args)
         {
             _nextMove++;
 
             if(_nextMove < _moves.Length )
-                player.AttemptMove(grid, _moves[_nextMove]);
+                args.Player.AttemptMove(args.Grid, _moves[_nextMove]);
         }
 
         public override void Error(string message)
