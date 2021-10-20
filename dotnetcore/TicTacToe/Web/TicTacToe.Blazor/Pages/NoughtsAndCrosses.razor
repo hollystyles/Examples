@@ -10,19 +10,19 @@
     <table class="table w-auto"> 
         <tbody>
             <tr>
-                <td @onclick="Cell1Click">@uiContext.currentGrid.CellAt(1).Content()</td>
-                <td @onclick="Cell2Click">@uiContext.currentGrid.CellAt(2).Content()</td>
-                <td @onclick="Cell3Click">@uiContext.currentGrid.CellAt(3).Content()</td>
+                <td @onclick="@(() => Go(1))">@uiContext.currentGrid.CellAt(1).Content()</td>
+                <td @onclick="@(() => Go(2))">@uiContext.currentGrid.CellAt(2).Content()</td>
+                <td @onclick="@(() => Go(3))">@uiContext.currentGrid.CellAt(3).Content()</td>
             </tr>
             <tr>
-                <td @onclick="Cell4Click">@uiContext.currentGrid.CellAt(4).Content()</td>
-                <td @onclick="Cell5Click">@uiContext.currentGrid.CellAt(5).Content()</td>
-                <td @onclick="Cell6Click">@uiContext.currentGrid.CellAt(6).Content()</td>
+                <td @onclick="@(() => Go(4))">@uiContext.currentGrid.CellAt(4).Content()</td>
+                <td @onclick="@(() => Go(5))">@uiContext.currentGrid.CellAt(5).Content()</td>
+                <td @onclick="@(() => Go(6))">@uiContext.currentGrid.CellAt(6).Content()</td>
             </tr>
             <tr>
-                <td @onclick="Cell7Click">@uiContext.currentGrid.CellAt(7).Content()</td>
-                <td @onclick="Cell8Click">@uiContext.currentGrid.CellAt(8).Content()</td>
-                <td @onclick="Cell9Click">@uiContext.currentGrid.CellAt(9).Content()</td>
+                <td @onclick="@(() => Go(7))">@uiContext.currentGrid.CellAt(7).Content()</td>
+                <td @onclick="@(() => Go(8))">@uiContext.currentGrid.CellAt(8).Content()</td>
+                <td @onclick="@(() => Go(9))">@uiContext.currentGrid.CellAt(9).Content()</td>
             </tr>
         </tbody>
     </table>
@@ -37,7 +37,7 @@
     </div>
 }
     <div>
-        <p>@uiContext.error</p>
+        <p class="validation-message">@uiContext.error</p>
     </div>
 
 @code{
@@ -49,8 +49,6 @@
     private bool initialized;
 
     private bool started;
-
-    private int nextMove;
 
     protected override void OnInitialized()
     {
@@ -77,67 +75,13 @@
         game.Start();
     }
 
-    private void Go()
+    private void Go(int move)
     {
         if(!uiContext.gameOver)
         {
             uiContext.error = string.Empty;
-            uiContext.AcceptMove(nextMove);
+            uiContext.AcceptMove(move);
             started = !uiContext.gameOver;
         }
-    }    
-
-    private void Cell1Click()
-    {   
-        nextMove = 1;
-        Go();
-    }     
-
-    private void Cell2Click()
-    {   
-        nextMove = 2;
-        Go();
-    }    
-
-    private void Cell3Click()
-    {   
-        nextMove = 3;
-        Go();
-    }    
-
-    private void Cell4Click()
-    {   
-        nextMove = 4;
-        Go();
-    }    
-
-    private void Cell5Click()
-    {   
-        nextMove = 5;
-        Go();
-    }    
-
-    private void Cell6Click()
-    {   
-        nextMove = 6;
-        Go();
-    }    
-
-    private void Cell7Click()
-    {   
-        nextMove = 7;
-        Go();
-    }    
-
-    private void Cell8Click()
-    {   
-        nextMove = 8;
-        Go();
-    }    
-
-    private void Cell9Click()
-    {   
-        nextMove = 9;
-        Go();
-    }
+    }        
 }
