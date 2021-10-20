@@ -43,7 +43,11 @@ namespace TicTacToe.Test
         }
 
         public override void Draw(Grid grid)
-        {}
+        {
+            /*-------------------------+
+            |   I'm a fake UI LOL :)   |
+            +-------------------------*/
+        }
 
         public override void OnPlayerTakeTurn(object sender, TakeTurnEventArgs args)
         {

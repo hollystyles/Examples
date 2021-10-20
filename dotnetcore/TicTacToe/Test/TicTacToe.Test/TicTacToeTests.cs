@@ -9,6 +9,13 @@ namespace TicTacToe.Test
         [Fact]
         public void TestNoughtsWins()
         {
+            /*
+                O | X | O
+                -------/---
+                 X | O | X
+                ---/-------
+                 O |   |  
+            */
             var fakeUi = new FakeUiContext(new int[]{
                     1, 2, 3, 4, 5 ,6, 7
                 });
@@ -33,6 +40,15 @@ namespace TicTacToe.Test
         [Fact]
         public void TestCrossesWinsAfterNoughtsWins()
         {
+            /*
+                  Game 1         Game 2
+
+                 O | X | O      X | O | X
+                -------/---    -------/---
+                 X | O | X      O | X | O
+                ---/-------    ---/-------
+                 O |   |        X |   |  
+            */
             var fakeUi = new FakeUiContext(new int[]{
                     1, 2, 3, 4, 5 ,6, 7, 1, 2, 3, 4, 5 ,6, 7
                 });
@@ -61,6 +77,17 @@ namespace TicTacToe.Test
         [InlineData(new int[]{8, 9, 6, 7, 4, 5, 3, 2, 1, 1, 2, 3, 5, 4, 7, 6, 9, 8})]
         public void TestDrawnGame(int[] moves)
         {
+            //Play four drawn games back to back
+            /*
+                 Game 1/3        Game 2/4
+
+                 O | X | O      X | O | X
+                -----------    -----------
+                 O | X | O      X | O | X
+                -----------    -----------
+                 X | O | X      O | X | O
+            */
+            
             var fakeUi = new FakeUiContext(moves);
             
             var g = new Game(
@@ -70,8 +97,7 @@ namespace TicTacToe.Test
                 },
                 fakeUi
             );
-
-            //Play two drawn games back to back
+            
             g.Start();
 
             Assert.True(fakeUi.IsDrawnGame);
