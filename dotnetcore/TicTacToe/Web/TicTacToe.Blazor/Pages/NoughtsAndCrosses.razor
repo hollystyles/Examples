@@ -7,22 +7,22 @@
 
 @if (initialized)
 {
-    <table class="table w-auto"> 
+    <table class="table w-auto nc-board"> 
         <tbody>
             <tr>
-                <td @onclick="@(() => Go(1))">@uiContext.currentGrid.CellAt(1).Content()</td>
-                <td @onclick="@(() => Go(2))">@uiContext.currentGrid.CellAt(2).Content()</td>
-                <td @onclick="@(() => Go(3))">@uiContext.currentGrid.CellAt(3).Content()</td>
+                <td @onclick="@(() => Go(1))" class="nc-cell-tl">@uiContext.currentGrid.CellAt(1).Content()</td>
+                <td @onclick="@(() => Go(2))" class="nc-cell-tm">@uiContext.currentGrid.CellAt(2).Content()</td>
+                <td @onclick="@(() => Go(3))" class="nc-cell-tr">@uiContext.currentGrid.CellAt(3).Content()</td>
             </tr>
             <tr>
-                <td @onclick="@(() => Go(4))">@uiContext.currentGrid.CellAt(4).Content()</td>
-                <td @onclick="@(() => Go(5))">@uiContext.currentGrid.CellAt(5).Content()</td>
-                <td @onclick="@(() => Go(6))">@uiContext.currentGrid.CellAt(6).Content()</td>
+                <td @onclick="@(() => Go(4))" class="nc-cell-ml">@uiContext.currentGrid.CellAt(4).Content()</td>
+                <td @onclick="@(() => Go(5))" class="nc-cell-mm">@uiContext.currentGrid.CellAt(5).Content()</td>
+                <td @onclick="@(() => Go(6))" class="nc-cell-mr">@uiContext.currentGrid.CellAt(6).Content()</td>
             </tr>
             <tr>
-                <td @onclick="@(() => Go(7))">@uiContext.currentGrid.CellAt(7).Content()</td>
-                <td @onclick="@(() => Go(8))">@uiContext.currentGrid.CellAt(8).Content()</td>
-                <td @onclick="@(() => Go(9))">@uiContext.currentGrid.CellAt(9).Content()</td>
+                <td @onclick="@(() => Go(7))" class="nc-cell-bl">@uiContext.currentGrid.CellAt(7).Content()</td>
+                <td @onclick="@(() => Go(8))" class="nc-cell-bm">@uiContext.currentGrid.CellAt(8).Content()</td>
+                <td @onclick="@(() => Go(9))" class="nc-cell-br">@uiContext.currentGrid.CellAt(9).Content()</td>
             </tr>
         </tbody>
     </table>
