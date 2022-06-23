@@ -10,7 +10,7 @@ namespace TicTacToe.Test
         public void TestNoughtsWins()
         {
             /*
-                O | X | O
+                 O | X | O
                 -------/---
                  X | O | X
                 ---/-------

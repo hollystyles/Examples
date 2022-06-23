@@ -5,6 +5,7 @@ namespace Hollyathome.Games.TicTacToe.Lib
     public class Grid
     {
         private readonly Cell[] _cells;
+
         public Grid(Cell[] cells)
         {
             _cells = cells;
