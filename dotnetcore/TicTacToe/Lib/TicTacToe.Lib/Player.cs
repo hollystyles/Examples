@@ -1,14 +1,12 @@
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Hollyathome.Games.TicTacToe.Lib
 {
     public class Player
     {
-        private readonly string _symbol;
-        private readonly UiContext _ui;
+        protected readonly string _symbol;
+        protected readonly UiContext _ui;
 
         public event EventHandler<TakeTurnEventArgs> TakeTurnHandler;        
 
@@ -25,7 +23,7 @@ namespace Hollyathome.Games.TicTacToe.Lib
             return _symbol;
         }
 
-        internal void Play(Grid grid)
+        internal virtual void Play(Grid grid)
         {
             OnTakeTurn(grid);                
         }

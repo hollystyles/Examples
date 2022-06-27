@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using Hollyathome.Games.TicTacToe.Lib;
 
@@ -152,6 +151,24 @@ namespace TicTacToe.Test
             }
 
             Assert.EndsWith("Please try again.", fakeUi.LastError);
+        }
+    
+        [Fact]
+        public void TestAIPlayer()
+        {
+            var fakeUi = new FakeUiContext(new int[]{});
+            
+            var g = new Game(
+                new Player[]{
+                    new AIPlayer("O", fakeUi),
+                    new AIPlayer("X", fakeUi)
+                },
+                fakeUi
+            );
+
+            g.Start();
+            
+            Assert.True(fakeUi.Winner.Symbol() == "O");
         }
     }
 }
