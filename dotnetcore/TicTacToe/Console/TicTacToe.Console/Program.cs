@@ -13,7 +13,7 @@ namespace Hollyathome.Games.TicTacToe.Console
                 new Game(
                     new Player[]{
                         new Player("O", console),
-                        new Player("X", console)
+                        new AIPlayer("X", console)
                     },
                     console
                 )
