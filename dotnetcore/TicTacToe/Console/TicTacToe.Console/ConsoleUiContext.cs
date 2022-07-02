@@ -7,7 +7,7 @@ namespace Hollyathome.Games.TicTacToe.Console
     {
         public override void Draw(Grid grid)
         {
-            System.Console.Clear();
+            TryClearConsole();
             System.Console.Write("\t");
 
             for(var i = 1; i <= 9; i++)
@@ -43,6 +43,11 @@ namespace Hollyathome.Games.TicTacToe.Console
             
             args.Player.AttemptMove(args.Grid, move);
         }
+
+	public override void Message(string message)
+	{
+	    System.Console.WriteLine(message);
+	}
 
         public override void Error(string message)
         {
@@ -84,5 +89,17 @@ namespace Hollyathome.Games.TicTacToe.Console
                 } 
             }
         }
+
+	private void TryClearConsole()
+	{
+	    try
+	    {
+		System.Console.Clear();
+	    }
+	    catch(System.IO.IOException)
+	    {
+		//If we can't clear the console it's not critical, so ignore it.
+	    }
+	}
     }
 }

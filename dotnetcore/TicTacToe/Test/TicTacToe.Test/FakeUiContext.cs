@@ -7,6 +7,7 @@ namespace TicTacToe.Test
     {
         private int _nextMove;
         private int[] _moves;
+	private string _lastMessage;
         private string _lastError;
         private Player _winner;
         private bool _isDrawnGame;
@@ -17,6 +18,14 @@ namespace TicTacToe.Test
 
             _moves = moves;
         }
+
+	public string LastMessage
+	{
+	    get
+	    {
+		return _lastMessage;
+	    }
+	}
 
         public string LastError
         {
@@ -56,6 +65,11 @@ namespace TicTacToe.Test
             if(_nextMove < _moves.Length )
                 args.Player.AttemptMove(args.Grid, _moves[_nextMove]);
         }
+
+	public override void Message(string message)
+	{
+	    _lastMessage = message;
+	}
 
         public override void Error(string message)
         {

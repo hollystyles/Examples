@@ -11,6 +11,7 @@ namespace Hollyathome.Games.TicTacToe.Lib
 
         internal override void Play(Grid grid)
         {
+	    _ui.Message("Thinking...");
             var move = DecideMove(grid);
 
             AttemptMove(grid, move);

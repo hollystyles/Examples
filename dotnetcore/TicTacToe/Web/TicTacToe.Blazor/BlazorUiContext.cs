@@ -35,6 +35,11 @@ namespace TicTacToe.Blazor
             currentPlayer.AttemptMove(currentGrid, move);
         }
 
+	public override void Message(string message)
+	{
+	    prompt = message;
+	}
+
         public override void Error(string message)
         {
             error = message;
