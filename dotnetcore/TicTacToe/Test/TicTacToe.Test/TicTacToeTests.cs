@@ -5,6 +5,9 @@ namespace TicTacToe.Test
 {
     public class TicTacToeTests
     {
+        private const string NOUGHTS = "O";
+	    private const string CROSSES = "X";
+	
         [Fact]
         public void TestNoughtsWins()
         {
@@ -15,25 +18,22 @@ namespace TicTacToe.Test
                 ---/-------
                  O |   |  
             */
-            var fakeUi = new FakeUiContext(new int[]{
-                    1, 2, 3, 4, 5 ,6, 7
-                });
-            
-            var g = new Game(
-                new Player[]{
-                    new Player("O", fakeUi),
-                    new Player("X", fakeUi)
-                },
-                fakeUi
-            );
+            var setOfMoves = new int[] {1, 2, 3, 4, 5 ,6, 7};
+            var fakeUi = new FakeUiContext(setOfMoves);
+            var players = new Player[] {
+                new Player(NOUGHTS, fakeUi),
+                new Player(CROSSES, fakeUi)
+            };
+
+            var game = new Game(players, fakeUi);
 
             while(fakeUi.HasMoreMoves())
             {
-                g.Start();
+                game.Start();
             }
 
             Assert.False(fakeUi.IsDrawnGame);
-            Assert.True(fakeUi.Winner.Symbol() == "O");
+            Assert.True(fakeUi.Winner.Symbol().Equals(NOUGHTS));
         }
 
         [Fact]
@@ -52,23 +52,23 @@ namespace TicTacToe.Test
                     1, 2, 3, 4, 5 ,6, 7, 1, 2, 3, 4, 5 ,6, 7
                 });
             
-            var g = new Game(
+            var game = new Game(
                 new Player[]{
-                    new Player("O", fakeUi),
-                    new Player("X", fakeUi)
+                    new Player(NOUGHTS, fakeUi),
+                    new Player(CROSSES, fakeUi)
                 },
                 fakeUi
             );
 
-            g.Start();
+            game.Start();
 
             Assert.False(fakeUi.IsDrawnGame);
-            Assert.True(fakeUi.Winner.Symbol() == "O");
+            Assert.True(fakeUi.Winner.Symbol().Equals(NOUGHTS));
 
-            g.Start();
+            game.Start();
 
             Assert.False(fakeUi.IsDrawnGame);
-            Assert.True(fakeUi.Winner.Symbol() == "X");
+            Assert.True(fakeUi.Winner.Symbol().Equals(CROSSES));
         }
 
         [Theory]
@@ -78,32 +78,30 @@ namespace TicTacToe.Test
         {
             //Play four drawn games back to back
             /*
-                 Game 1/3        Game 2/4
+                 Game 1/4        Game 2/4      Game 3/4      Game 4/4
 
-                 O | X | O      X | O | X
-                -----------    -----------
-                 O | X | O      X | O | X
-                -----------    -----------
-                 X | O | X      O | X | O
+                 O | X | O      X | O | X     O | X | O     X | O | X
+                -----------    -----------   -----------   -----------
+                 O | X | O      X | O | X     O | X | O     X | O | X
+                -----------    -----------   -----------   -----------
+                 X | O | X      O | X | O     X | O | X     O | X | O
             */
             
             var fakeUi = new FakeUiContext(moves);
             
-            var g = new Game(
+            var game = new Game(
                 new Player[]{
-                    new Player("O", fakeUi),
-                    new Player("X", fakeUi)
+                    new Player(NOUGHTS, fakeUi),
+                    new Player(CROSSES, fakeUi)
                 },
                 fakeUi
             );
             
-            g.Start();
-
-            Assert.True(fakeUi.IsDrawnGame);
-
-            g.Start();
-
-            Assert.True(fakeUi.IsDrawnGame);
+            while(fakeUi.HasMoreMoves())
+            {
+                game.Start();
+                Assert.True(fakeUi.IsDrawnGame);
+            }
         }
 
         [Fact]
@@ -113,44 +111,44 @@ namespace TicTacToe.Test
                     1, 2, 3, 4, 5 ,6, 7, 1, 2, 3, 4, 5 ,6, 7
                 });
             
-            var g = new Game(
+            var game = new Game(
                 new Player[]{
-                    new Player("O", fakeUi),
-                    new Player("X", fakeUi)
+                    new Player(NOUGHTS, fakeUi),
+                    new Player(CROSSES, fakeUi)
                 },
                 fakeUi
             );
 
             while(fakeUi.HasMoreMoves())
             {
-                g.Start();
+                game.Start();
             }
 
-            Assert.True(fakeUi.Winner.Symbol() == "X");
+            Assert.False(fakeUi.IsDrawnGame);
+            Assert.True(fakeUi.Winner.Symbol().Equals(CROSSES));
         }
 
         [Theory]
         [InlineData(new int[]{1, 1, 2, 3, 4, 5 ,6, 7})]
         [InlineData(new int[]{1, 10, 20, 2, 3, 4, 5 ,6, 7})]
-        [InlineData(new int[]{8, 9, 6, 7, 4, 5, 3, 2, 1, 1, 1, 3, 5, 4, 7, 6, 9, 8})]
-        public void TestInvalidMove(int[] moves)
+        [InlineData(new int[]{8, 9, 6, 7, 4, 5, 3, 8, 1, 1, 2, 3, 5, 3, 7, 6, 9, 8})]
+        public void TestInvalidMoves(int[] moves)
         {
             var fakeUi = new FakeUiContext(moves);
             
-            var g = new Game(
+            var game = new Game(
                 new Player[]{
-                    new Player("O", fakeUi),
-                    new Player("X", fakeUi)
+                    new Player(NOUGHTS, fakeUi),
+                    new Player(CROSSES, fakeUi)
                 },
                 fakeUi
             );
 
             while(fakeUi.HasMoreMoves())
             {
-                g.Start();
-            }
-
-            Assert.EndsWith("Please try again.", fakeUi.LastError);
+                game.Start();
+                Assert.EndsWith("Please try again.", fakeUi.LastError);
+            }            
         }
     
         [Fact]
@@ -158,17 +156,17 @@ namespace TicTacToe.Test
         {
             var fakeUi = new FakeUiContext(new int[]{});
             
-            var g = new Game(
+            var game = new Game(
                 new Player[]{
-                    new AIPlayer("O", fakeUi),
-                    new AIPlayer("X", fakeUi)
+                    new AIPlayer(NOUGHTS, fakeUi),
+                    new AIPlayer(CROSSES, fakeUi)
                 },
                 fakeUi
             );
 
-            g.Start();
+            game.Start();
             
-            Assert.True(fakeUi.Winner.Symbol() == "O");
+            Assert.True(fakeUi.Winner.Symbol().Equals(NOUGHTS));
         }
     }
 }
